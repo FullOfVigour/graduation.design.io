@@ -12,12 +12,34 @@ export default {
 </script>
 
 <style>
+#main,
+#app,
+body,
+html {
+  height: 100%;
+}
+
+body,
+html {
+  margin: 0;
+}
+
+body {
+  background: #eaedf1;
+}
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: 'Helvetica Neue', 'Hiragino Sans GB', 'Microsoft YaHei',
+    '\9ED1\4F53', Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+.content__view {
+  width: 100%;
+  order: 1;
+  background: white;
+  box-sizing: border-box;
 }
 </style>
