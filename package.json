@@ -5,8 +5,9 @@
   "author": "xuhan <xuhan@spacetech.com.cn>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "prod": "node –max-old-space-size=4096",
+    "dev":
+      "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "prod": "node –max-old-space-size=512",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
@@ -86,9 +87,5 @@
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }
