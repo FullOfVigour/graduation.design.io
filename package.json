@@ -5,8 +5,7 @@
   "author": "xuhan <xuhan@spacetech.com.cn>",
   "private": true,
   "scripts": {
-    "dev":
-      "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
@@ -15,11 +14,14 @@
     "build": "node --max_old_space_size=400 build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "babel-plugin-component": "^1.1.1",
     "element": "^0.1.4",
     "element-ui": "^2.4.9",
     "moment": "^2.22.2",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -86,5 +88,9 @@
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
