@@ -1,15 +1,9 @@
-import Vue from 'vue'
+import define from './define'
 import Router from 'vue-router'
-import login from '../modules/login/index.vue'
 
-Vue.use(Router)
+const { login, main } = define
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'login',
-      component: login
-    }
-  ]
-})
+const router = {
+  routes: [login, main]
+}
+export default new Router(router)
