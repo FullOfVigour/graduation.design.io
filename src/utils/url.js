@@ -1,4 +1,4 @@
-import router from '../router/jyjh'
+import router from '../router/main'
 const baseUrl = `${window.location.origin}/weixt/base/func`
 export const openVue1Url = url => {
   window.open(baseUrl + `/90514/#!${url}`)
@@ -18,6 +18,6 @@ export function isCurrentRouter(name) {
 export function downTemplate(url) {
   var iframe = document.createElement('iframe')
   iframe.style.display = 'none'
-  iframe.src = "javascript: '<script>location.href=\"" + url + "\"</script>'"
+  iframe.src = 'javascript: \'<script>location.href="' + url + '"</script>\''
   document.getElementsByTagName('body')[0].appendChild(iframe)
 }
