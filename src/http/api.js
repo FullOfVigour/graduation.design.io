@@ -26,7 +26,7 @@ const callApi = ({
   isShowError = true
 }) => {
   const csrfToken = Base64.encode(
-    new Date().valueOf() + 'jyjh' + randomString() + api
+    new Date().valueOf() + 'main' + randomString() + api
   )
   let token = get('access_token')
   axiosOptions = Object.assign(axiosOptions, {
@@ -46,9 +46,9 @@ const callApi = ({
   // https://github.com/mzabriskie/axios#using-applicationx-www-form-urlencoded-format
   // URLSearchParams 只有某些版本的浏览器支持
   // https://caniuse.com/#search=URLSearchParams
-  // 当前时间戳+jyjh+随机数
+  // 当前时间戳+main+随机数
   // const csrfToken = Base64.encode(
-  //   new Date().valueOf() + 'jyjh' + randomString() + api
+  //   new Date().valueOf() + 'main' + randomString() + api
   // )
 
   const params = qs.stringify({
@@ -59,9 +59,8 @@ const callApi = ({
   // params.append('apiparams', JSON.stringify())
   return axios
     .post(api, params)
-    .then(({ data: { error: { code, mess }, data, token } }) => {
+    .then(({ data: { data, error: { code, mess }, token } }) => {
       if (code !== '200') {
-        console.log({ code, message: mess })
         return Promise.reject(
           new Error(JSON.stringify({ code, message: mess }))
         )
@@ -70,7 +69,9 @@ const callApi = ({
         vue.$message.success(success)
       }
       // 更新cookie
-      if (token) setAccessToken(token)
+      if (token) {
+        setAccessToken(token)
+      }
 
       return data
     })
