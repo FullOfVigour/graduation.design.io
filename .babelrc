@@ -23,7 +23,7 @@
   ],
   "comments": false,
   "env": {
-    "jyjh": {
+    "main": {
       "presets": ["env", "stage-2"],
       "plugins": ["istanbul"]
     }
