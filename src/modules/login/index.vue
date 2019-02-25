@@ -17,7 +17,7 @@
   <div class="login-wrap">
     <div class="login__title">
       <img class="login__img"
-        src="./assets/login.png">综合实践管理平台</div>
+        src="../../assets/logo.png">综合实践管理平台</div>
     <div class="login__main">
 
       <div class="login__body">
@@ -102,6 +102,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           clearSSID()
+          console.log(123)
           this.$callApi({
             api,
             param
