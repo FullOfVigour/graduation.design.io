@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import qs from 'qs'
+import router from '../router/index'
 import { randomString } from '../utils/random'
 import { get } from '../utils/cookie'
 import { Base64 } from 'js-base64'
@@ -59,18 +60,21 @@ const callApi = ({
   // params.append('apiparams', JSON.stringify())
   return axios
     .post(api, params)
-    .then(({ data: { data, error: { code, mess }, token } }) => {
+    .then(({ data: { data, error: { code, mess } } }) => {
       if (code !== '200') {
-        return Promise.reject(
-          new Error(JSON.stringify({ code, message: mess }))
-        )
+        // 登入信息失效
+        if (code === '505') {
+          console.log(vue, router.push)
+          router.push('/login')
+        }
+        return Promise.reject(new Error(JSON.stringify(mess)))
       }
       if (success) {
         vue.$message.success(success)
       }
       // 更新cookie
-      if (token) {
-        setAccessToken(token)
+      if (data.token) {
+        setAccessToken(data.token)
       }
 
       return data
