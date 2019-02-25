@@ -45,6 +45,11 @@ const clearSSID = () => {
     domain: document.location.hostname,
     path: '/'
   })
+  clear({
+    key: 'access_token',
+    domain: document.location.hostname,
+    path: '/'
+  })
 }
 
 export { setSSID, setAccessToken, isHaveSSID, clearSSID }
