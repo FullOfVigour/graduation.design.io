@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import { setSSID, clearSSID } from '../../storage/cookie.js'
 import { setBaseData } from '../../storage/localStorage.js'
 import { SET_IS_FROM_LOGIN } from '../../store/mutation-types'
@@ -92,6 +92,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['initApp']),
     ...mapMutations([SET_IS_FROM_LOGIN]),
     // 页面登入,当表单校验成功时调用后台登入接口,并在接口成功之后将返回的 token 存入 cookie中
     reLogin() {
@@ -102,7 +103,6 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           clearSSID()
-          console.log(123)
           this.$callApi({
             api,
             param
@@ -111,6 +111,7 @@ export default {
               setBaseData(data)
               this.$refs.form.resetFields()
               this.SET_IS_FROM_LOGIN(true)
+              this.initApp(data)
               this.$router.push({ name: 'main' })
             })
           })

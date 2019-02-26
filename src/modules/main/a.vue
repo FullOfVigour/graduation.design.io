@@ -93,17 +93,15 @@ export default {
     }
   },
   mounted() {
-    this.reFind()
+    // this.reFind()
   },
   methods: {
-    reFind() {
-      this.$callApi({
-        api: 'server_consult_listConsult',
-        param: {}
-      }).then(data => {
-        console.log(data)
-      })
-    },
+    // reFind() {
+    //   this.$callApi({
+    //     api: 'server_consult_listConsult',
+    //     param: {}
+    //   }).then(data => {})
+    // },
 
     // 被禁用的时间
     disabledDate(time) {
@@ -144,6 +142,7 @@ export default {
 
     // 关闭前回调
     onBeforeClose() {
+      this.isDialogVisible = false
       this.initData()
     },
 
