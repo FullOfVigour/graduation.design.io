@@ -8,7 +8,7 @@ Vue.use(Vuex)
 export default {
   strict: process.env.NODE_ENV !== 'production',
   state: {
-    compid: '',
+    studentId: '',
     userid: '',
     userName: '',
     companyName: '',
