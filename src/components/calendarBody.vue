@@ -9,23 +9,21 @@
             :key="item.key"
             class="calendar__table-title">{{item[titleType]}}</th>
         </tr>
+
         <tr v-for="(item,i) in dateList"
           :key="i">
-          <th v-for="(k,t) in item"
-            :key="t">{{k}}</th>
+          <td v-for="child in item"
+            :key="child.timeStamp"
+            class="table__td">
+            <div class="table__div">
+              <span class="table__span table__span-date">{{child.day}}</span>
+              <span class="table__span table__span-remark">{{getRemark(child.timeStamp)}}</span>
+            </div>
+          </td>
         </tr>
+
       </tbody>
     </table>
-    <!-- {{dateList}} -->
-    <!-- <div class="calendar__top">
-      <div v-for="item in weekList"
-        :key="item.key"
-        class="calendar__top-item">
-        <span v-show="isShow.nameCh">{{item.nameCh}}</span>
-        <span v-show="isShow.nameEn">{{item.nameEn}}</span>
-        <span v-show="isShow.nameEnAb">{{item.nameEnAb}}</span>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -37,35 +35,40 @@ export default {
       type: String,
       default: 'nameCh'
     },
-    selectTime: Object
+    selectTime: Object,
+    data: Array
   },
   computed: {
     dateList() {
-      const monthDayNum = moment(this.selectMonth).daysInMonth()
-      const lastMonthDayNum = moment(this.selectMonth)
-        .subtract(1, 'month')
-        .daysInMonth()
+      const monthDayNum = moment(this.selectMonth).daysInMonth() // 当前月总天数
       const firstDayOnWeek =
         moment(this.selectMonth)
           .date(1)
           .weekday() + 1
       let list = []
-      let firstRow = []
-      for (let i = 0; i < 7; i++) {
-        if (firstDayOnWeek === i) firstRow[i] = 1
-        else if (i < firstDayOnWeek) {
-          firstRow[i] = lastMonthDayNum + i - firstDayOnWeek + 1
-        } else firstRow[i] = i - firstDayOnWeek + 1
-      }
-      list.push(firstRow)
-      let num = firstRow[6]
-      for (let i = 0; i < (monthDayNum - firstRow[6]) % 7; i++) {
-        let listRow = []
-        for (let k = 0; k < 7; k++) {
-          listRow[k] = ++num
+      let rowData = []
+
+      let allDays = monthDayNum + firstDayOnWeek
+      let allRows = parseInt(allDays / 7) + (allDays % 7 === 0 ? 0 : 1)
+      for (let i = 0; i < allRows * 7 + 1; i++) {
+        const day = firstDayOnWeek - i
+        if (i % 7 === 0 && i !== 0) {
+          list.push(rowData)
+          rowData = []
         }
-        list.push(listRow)
+        rowData[i % 7] = {
+          day: moment(this.selectMonth)
+            .subtract(day, 'day')
+            .date(),
+          timeStamp: moment(this.selectMonth)
+            .subtract(day, 'day')
+            .valueOf(),
+          k: moment(this.selectMonth)
+            .subtract(day, 'day')
+            .format('YYYY-MM-DD')
+        }
       }
+
       return list
     },
     selectMonth() {
@@ -121,14 +124,6 @@ export default {
           nameEnAb: 'SAT',
           key: 6
         }
-      ],
-      list: [
-        [{}, {}, {}, {}, {}, {}, {}],
-        [{}, {}, {}, {}, {}, {}, {}],
-        [{}, {}, {}, {}, {}, {}, {}],
-        [{}, {}, {}, {}, {}, {}, {}],
-        [{}, {}, {}, {}, {}, {}, {}],
-        [{}, {}, {}, {}, {}, {}, {}]
       ]
     }
   },
@@ -140,27 +135,44 @@ export default {
       //   ).daysInMonth(),
       //   new Date('2019').getTime()
       // )
+    },
+    getRemark(timeStamp) {
+      // console.log(
+      //   moment(timeStamp).format('YYYY-MM-DD'),
+      //   timeStamp,
+      //   this.data.length
+      // )
+
+      for (let i in this.data) {
+        let item = this.data[i]
+        if (item.stateDate <= timeStamp && timeStamp <= item.endDate) {
+          console.log('a', item.type === '1' ? '工作' : '休息')
+          return item.type === '1' ? '工作' : '休息'
+        }
+      }
+      this.data.forEach(item => {
+        if (item.stateDate) {
+          // console.log(
+          //   '--------------------------------------------\n',
+          //   moment(item.stateDate).format('YYYY-MM-DD'),
+          //   item.stateDate,
+          //   '\n',
+          //   moment(timeStamp).format('YYYY-MM-DD'),
+          //   timeStamp,
+          //   '\n',
+          //   moment(item.endDate).format('YYYY-MM-DD'),
+          //   item.endDate,
+          //   '\n',
+          //   '\n--------------------------------------------'
+          // )
+        }
+      })
     }
   }
 }
 </script>
 <style lang="scss" scoped>
 .calendar {
-  &__body {
-    height: 300px;
-  }
-  &__top {
-    display: flex;
-    border-bottom: 1px solid #ebeef5;
-    align-items: center;
-    justify-content: space-around;
-    &-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-size: 12px;
-    }
-  }
   &__table {
     table-layout: fixed;
     width: 100%;
@@ -170,6 +182,41 @@ export default {
       color: #606266;
       font-weight: 400;
       border-bottom: solid 1px #ebeef5;
+    }
+    .table {
+      &__td {
+        height: 80px;
+        padding: 4px 0;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+      }
+      &__div {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        // flex-wrap: wrap;
+        width: 100%;
+        height: 100%;
+        &:hover {
+          color: #409eff;
+          // font-weight: 700;
+          // font-size: 20px;
+        }
+      }
+      &__span {
+        &-date {
+          font-size: 16px;
+        }
+        &-remark {
+          color: #ccc;
+        }
+        // position: absolute;
+      }
     }
   }
 }

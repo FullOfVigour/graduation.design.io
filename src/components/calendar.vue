@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="card">
+  <div class="card__warpper">
+    <div class="card__content">
       <div class="card__header">
         <div class="header__action-row header__action-row--left">
           <el-button icon="el-icon-d-arrow-left"
@@ -31,7 +31,8 @@
       <div class="card__body">
         <calendar-body ref="calendarBody"
           :selectTime="selectTime"
-          :currentTime="currentTime"></calendar-body>
+          :currentTime="currentTime"
+          :data="data"></calendar-body>
       </div>
     </div>
   </div>
@@ -41,6 +42,9 @@
 import moment from 'moment'
 import calendarBody from './calendarBody'
 export default {
+  props: {
+    data: Array
+  },
   components: {
     calendarBody
   },
@@ -97,13 +101,19 @@ export default {
 
 <style lang="scss" scoped>
 .card {
-  width: 500px;
-  border: 1px solid #ebeef5;
-  color: #303133;
-  background-color: #fff;
-  overflow: hidden;
-  border-radius: 4px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  &__warpper {
+    display: block;
+    color: #606266;
+  }
+  &__content {
+    width: 800px;
+    border: 1px solid #ebeef5;
+    color: #303133;
+    background-color: #fff;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  }
   &__header {
     position: relative;
     // border-bottom: 1px solid #ebeef5;
