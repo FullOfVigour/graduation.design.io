@@ -71,13 +71,7 @@ export default {
   data() {
     return {
       time: '',
-      tableData: [
-        {
-          stateDate: 1549296000000,
-          endDate: 1549468800000,
-          type: '1'
-        }
-      ],
+      tableData: [],
       isDialogVisible: false,
       radio: '1',
 
@@ -94,6 +88,11 @@ export default {
   },
   mounted() {
     // this.reFind()
+    this.tableData.push({
+      stateDate: 1549296000000,
+      endDate: 1549468800000,
+      type: '1'
+    })
   },
   methods: {
     // reFind() {
@@ -148,6 +147,11 @@ export default {
 
     getDateString(time) {
       return moment(time).format('YYYY-MM-DD')
+    }
+  },
+  watch: {
+    tableData() {
+      this.$emit('change', this.tableData)
     }
   }
 }

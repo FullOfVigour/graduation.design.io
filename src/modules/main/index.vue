@@ -2,9 +2,13 @@
   <div>
     <!-- <top-bar></top-bar> -->
     <div style="margin:20px;">
-      <calendar></calendar>
+      <calendar :data="list"></calendar>
     </div>
-    <testa></testa>
+    <!-- <el-date-picker v-model="value1"
+      type="date"
+      placeholder="选择日期">
+    </el-date-picker> -->
+    <testa @change="onChange"></testa>
   </div>
 </template>
 
@@ -24,10 +28,13 @@ export default {
     this.initApp(getBaseData()).then(() => {})
   },
   data() {
-    return {}
+    return { value1: '', list: [{}] }
   },
   methods: {
-    ...mapActions(['initApp'])
+    ...mapActions(['initApp']),
+    onChange(list) {
+      this.list = list
+    }
   }
 }
 </script>
