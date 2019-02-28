@@ -28,7 +28,7 @@ export default {
     this.initApp(getBaseData()).then(() => {})
   },
   data() {
-    return { value1: '', list: [{}] }
+    return { value1: '', list: [] }
   },
   methods: {
     ...mapActions(['initApp']),

@@ -41,9 +41,9 @@ export default {
   },
   computed: {
     dateList() {
-      const monthDayNum = moment(this.selectMonth).daysInMonth() // 当前月总天数
+      const monthDayNum = moment(this.selectTime).daysInMonth() // 当前月总天数
       const firstDayOnWeek =
-        moment(this.selectMonth)
+        moment(this.selectTime)
           .date(1)
           .weekday() + 1
       let list = []
@@ -58,26 +58,19 @@ export default {
           rowData = []
         }
         rowData[i % 7] = {
-          day: moment(this.selectMonth)
+          day: moment(this.selectTime)
             .subtract(day, 'day')
             .date(),
-          timeStamp: moment(this.selectMonth)
+          timeStamp: moment(this.selectTime)
             .subtract(day, 'day')
             .valueOf(),
-          k: moment(this.selectMonth)
+          k: moment(this.selectTime)
             .subtract(day, 'day')
             .format('YYYY-MM-DD')
         }
       }
 
       return list
-    },
-    selectMonth() {
-      return `${this.selectTime.year}-${
-        this.selectTime.month < 10
-          ? '0' + this.selectTime.month
-          : this.selectTime.month
-      }`
     }
   },
   data() {
@@ -139,7 +132,7 @@ export default {
       }
       if (
         moment()
-          .month(moment(this.selectMonth).month())
+          .month(moment(this.selectTime).month())
           .startOf('month')
           .valueOf() > timeStamp
       ) {
@@ -147,7 +140,7 @@ export default {
       }
       if (
         moment()
-          .month(moment(this.selectMonth).month())
+          .month(moment(this.selectTime).month())
           .endOf('month')
           .valueOf() < timeStamp
       ) {

@@ -7,12 +7,12 @@
             class="header__action-button"
             size="mini"
             circle
-            @click="onChangeTimeClick(0)"></el-button>
+            @click="onChangeTimeClick(1,'year')"></el-button>
           <el-button icon="el-icon-arrow-left"
             class="header__action-button"
             size="mini"
             circle
-            @click="onChangeTimeClick(1)"></el-button>
+            @click="onChangeTimeClick(1,'month')"></el-button>
         </div>
         <span class="header__span">{{currentTime}}</span>
         <div class="header__action-row header__action-row--right">
@@ -20,18 +20,17 @@
             class="header__action-button"
             size="mini"
             circle
-            @click="onChangeTimeClick(2)"></el-button>
+            @click="onChangeTimeClick(-1,'month')"></el-button>
           <el-button icon="el-icon-d-arrow-right"
             class="header__action-button"
             size="mini"
             circle
-            @click="onChangeTimeClick(3)"></el-button>
+            @click="onChangeTimeClick(-1,'year')"></el-button>
         </div>
       </div>
       <div class="card__body">
         <calendar-body ref="calendarBody"
           :selectTime="selectTime"
-          :currentTime="currentTime"
           :data="data"></calendar-body>
       </div>
     </div>
@@ -50,49 +49,29 @@ export default {
   },
   computed: {
     currentTime() {
-      return `${this.selectTime.year} 年 ${this.selectTime.month} 月`
+      return moment(this.selectTime).format('YYYY-MM')
     }
   },
   created() {},
   data() {
     return {
-      selectTime: {
-        year: moment().year(),
-        month: moment().month() + 1
-      }
+      selectTime: moment().valueOf()
     }
   },
   methods: {
-    // 日历顶部按钮点击事件,type:0--上一年,1--上一月,2--下一月,3--下一年
-    onChangeTimeClick(type) {
-      switch (type) {
-        case 0:
-          this.selectTime.year -= 1
-          break
-        case 1:
-          if (this.selectTime.month === 1) {
-            this.selectTime.year -= 1
-            this.selectTime.month = 12
-          } else this.selectTime.month -= 1
-          break
-        case 2:
-          if (this.selectTime.month === 12) {
-            this.selectTime.year += 1
-            this.selectTime.month = 1
-          } else this.selectTime.month += 1
-          break
-        case 3:
-          this.selectTime.year += 1
-          break
-
-        default:
-          break
-      }
+    /**
+     * 日历顶部按钮点击事件
+     * @param {Number} number 表示需要前进或后退的数量(正的为前进,负的为后退)
+     * @param  {String} type 变动的单位(month:月,year:年)
+     */
+    onChangeTimeClick(number, type) {
+      this.selectTime = moment(this.selectTime)
+        .subtract(number, type)
+        .valueOf()
     }
   },
   watch: {
     currentTime() {
-      this.$refs.calendarBody.init()
       this.$emit('change', this.selectTime)
     }
   }
