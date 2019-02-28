@@ -15,7 +15,8 @@
           <td v-for="child in item"
             :key="child.timeStamp"
             class="table__td">
-            <div class="table__div">
+            <div class="table__div"
+              :class="getClass(child.timeStamp)">
               <span class="table__span table__span-date">{{child.day}}</span>
               <span class="table__span table__span-remark">{{getRemark(child.timeStamp)}}</span>
             </div>
@@ -128,45 +129,45 @@ export default {
     }
   },
   methods: {
-    init() {
-      // console.log(
-      //   moment(
-      //     `${this.selectTime.year}-${this.selectTime.month}`
-      //   ).daysInMonth(),
-      //   new Date('2019').getTime()
-      // )
-    },
-    getRemark(timeStamp) {
-      // console.log(
-      //   moment(timeStamp).format('YYYY-MM-DD'),
-      //   timeStamp,
-      //   this.data.length
-      // )
-
+    init() {},
+    getClass(timeStamp) {
+      let className = ''
+      if (
+        moment(timeStamp).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')
+      ) {
+        className += 'table__div-today'
+      }
+      if (
+        moment()
+          .month(moment(this.selectMonth).month())
+          .startOf('month')
+          .valueOf() > timeStamp
+      ) {
+        className += 'table__div-last'
+      }
+      if (
+        moment()
+          .month(moment(this.selectMonth).month())
+          .endOf('month')
+          .valueOf() < timeStamp
+      ) {
+        className += 'table__div-next'
+      }
       for (let i in this.data) {
         let item = this.data[i]
         if (item.stateDate <= timeStamp && timeStamp <= item.endDate) {
-          console.log('a', item.type === '1' ? '工作' : '休息')
+          className += item.type === '1' ? 'table__div-work' : 'table__div-rest'
+        }
+      }
+      return className
+    },
+    getRemark(timeStamp) {
+      for (let i in this.data) {
+        let item = this.data[i]
+        if (item.stateDate <= timeStamp && timeStamp <= item.endDate) {
           return item.type === '1' ? '工作' : '休息'
         }
       }
-      this.data.forEach(item => {
-        if (item.stateDate) {
-          // console.log(
-          //   '--------------------------------------------\n',
-          //   moment(item.stateDate).format('YYYY-MM-DD'),
-          //   item.stateDate,
-          //   '\n',
-          //   moment(timeStamp).format('YYYY-MM-DD'),
-          //   timeStamp,
-          //   '\n',
-          //   moment(item.endDate).format('YYYY-MM-DD'),
-          //   item.endDate,
-          //   '\n',
-          //   '\n--------------------------------------------'
-          // )
-        }
-      })
     }
   }
 }
@@ -199,13 +200,23 @@ export default {
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
-        // flex-wrap: wrap;
         width: 100%;
         height: 100%;
         &:hover {
           color: #409eff;
-          // font-weight: 700;
-          // font-size: 20px;
+        }
+        &-work {
+        }
+        &-rest {
+        }
+        &-today {
+          color: #409eff;
+        }
+        &-last {
+          color: #ccc;
+        }
+        &-next {
+          color: #ccc;
         }
       }
       &__span {
