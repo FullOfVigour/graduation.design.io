@@ -36,7 +36,7 @@ export default {
       type: String,
       default: 'nameCh'
     },
-    selectTime: Object,
+    selectTime: Number,
     data: Array
   },
   computed: {
@@ -125,27 +125,48 @@ export default {
     init() {},
     getClass(timeStamp) {
       let className = ''
+
+      // 判断当天日期
       if (
         moment(timeStamp).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')
       ) {
         className += 'table__div-today'
       }
-      if (
-        moment()
-          .month(moment(this.selectTime).month())
-          .startOf('month')
-          .valueOf() > timeStamp
-      ) {
+
+      // 判断是否属于本月日期
+
+      // if (
+      //   moment(this.selectTime)
+      //     .month(moment(this.selectTime).month())
+      //     .startOf('month')
+      //     .valueOf() > timeStamp
+      // ) {
+      // 上月日期
+      //   className += 'table__div-last'
+      // }
+      // if (
+      //   moment(this.selectTime)
+      //     .month(moment(this.selectTime).month())
+      //     .endOf('month')
+      //     .valueOf() < timeStamp
+      // ) {
+      // 下月日期
+      //   className += 'table__div-next'
+      // }
+
+      if (this.selectTime > timeStamp) {
+        // 上月日期
         className += 'table__div-last'
       }
+
       if (
-        moment()
-          .month(moment(this.selectTime).month())
-          .endOf('month')
-          .valueOf() < timeStamp
+        this.selectTime < timeStamp &&
+        moment(this.selectTime).month() < moment(timeStamp).month()
       ) {
-        className += 'table__div-next'
+        // 下月日期
+        className += 'table__div-last'
       }
+
       for (let i in this.data) {
         let item = this.data[i]
         if (item.stateDate <= timeStamp && timeStamp <= item.endDate) {
@@ -157,7 +178,15 @@ export default {
     getRemark(timeStamp) {
       for (let i in this.data) {
         let item = this.data[i]
-        if (item.stateDate <= timeStamp && timeStamp <= item.endDate) {
+        let state = item.stateDate
+        let end = item.endDate
+        if (typeof item.stateDate === 'string') {
+          state = moment(state).valueOf()
+        }
+        if (typeof item.endDate === 'string') {
+          end = moment(end).valueOf()
+        }
+        if (state <= timeStamp && timeStamp <= end) {
           return item.type === '1' ? '工作' : '休息'
         }
       }
