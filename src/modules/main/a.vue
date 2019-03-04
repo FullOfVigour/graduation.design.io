@@ -88,11 +88,7 @@ export default {
   },
   mounted() {
     // this.reFind()
-    this.tableData.push({
-      stateDate: 1549296000000,
-      endDate: 1549468800000,
-      type: '1'
-    })
+    this.tableData.push()
   },
   methods: {
     // reFind() {
@@ -133,7 +129,7 @@ export default {
     onConfirmClick() {
       this.isDialogVisible = false
       this.tableData.push({
-        stateDate: this.time[0].getTime(),
+        stateDate: moment(this.time[0]).format('YYYY-MM-DD'),
         endDate: this.time[1].getTime(),
         type: this.radio
       })
