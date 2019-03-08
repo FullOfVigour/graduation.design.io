@@ -2,12 +2,14 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import ElementUI from 'element-ui'
+import VueParticles from 'vue-particles'
 import '../../node_modules/element-ui/lib/theme-chalk/index.css'
 import moment from 'moment'
 
 import callApi from '../http/api'
 
 Vue.use(ElementUI)
+Vue.use(VueParticles)
 
 Vue.prototype.$callApi = callApi
 
