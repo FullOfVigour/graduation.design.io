@@ -1,79 +1,83 @@
 <template>
-  <!-- <div class="login-wrap">
-    <el-card class="box-card">
-      <div slot="header"
-        class="clearfix">
-        <span>卡片名称</span>
-        <el-button style="float: right; padding: 3px 0"
-          type="text">操作按钮</el-button>
-      </div>
-      <div v-for="o in 4"
-        :key="o"
-        class="text item">
-        {{'列表内容 ' + o }}
-      </div>
-    </el-card>
-  </div> -->
-  <div class="login-wrap">
-    <div class="login__title">
-      <img class="login__img"
-        src="../../assets/logo.png">综合实践管理平台</div>
-    <div class="login__main">
+  <div class="login">
+    <div class="login">
+      <div class="login__main">
+        <img class="login__logo"
+          src="../../assets/img/logo.png">
+        <div class="login__body">
+          <div class="login__form">
+            <el-form ref="form"
+              :model="form"
+              :rules="rules">
+              <el-form-item prop="username"
+                class="login-username">
+                <el-input v-model="form.username"
+                  placeholder="请输入用户名"
+                  @keyup.enter.native="reLogin">
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="password"
+                class="login-password">
+                <el-input type="password"
+                  v-model="form.password"
+                  placeholder="请输入密码"
+                  @keyup.enter.native="reLogin">
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="type">
+                <el-radio-group v-model="form.userType"
+                  class="login__radio-group">
+                  <el-radio label="student">学生
+                  </el-radio>
+                  <el-radio label="teacher">教师
+                  </el-radio>
+                </el-radio-group>
+              </el-form-item>
 
-      <div class="login__body">
-        <div class="login__mask"></div>
-        <div class="login__form">
-          <el-form ref="form"
-            :model="form"
-            :rules="rules">
-            <el-form-item prop="username"
-              class="login-username">
-              <el-input v-model="form.username"
-                placeholder="请输入用户名"
-                @keyup.enter.native="reLogin">
-                <template slot="prepend">
-                  <div class="username-input"></div>
-                </template>
-              </el-input>
-            </el-form-item>
-            <el-form-item prop="password"
-              class="login-password">
-              <el-input type="password"
-                v-model="form.password"
-                placeholder="请输入密码"
-                @keyup.enter.native="reLogin">
-                <template slot="prepend">
-                  <div class="password-input"></div>
-                </template>
-              </el-input>
-            </el-form-item>
-            <div class="login-check">
-              <input type="text"
-                class="check-itme"
-                placeholder="请输入验证码">
-              <span class="check-itme"></span>
-            </div>
-            <div class="login-btn">
+              <el-form-item prop="verification">
+                <div class="login-verification">
+                  <el-input class="login-verification__input"
+                    v-model="form.verification"
+                    placeholder="请输入验证码"></el-input>
+                  <verification-code class="login-verification__code"
+                    @change="onCodeChange"></verification-code>
+                </div>
+              </el-form-item>
+
               <el-button type="primary"
-                @click="reLogin">
+                @click="reLogin"
+                class="login-btn">
                 登录
               </el-button>
-            </div>
-          </el-form>
+            </el-form>
+          </div>
         </div>
       </div>
+      <vue-particles class="login__particles"
+        color="#aaa"
+        linesColor="#fff"
+        hoverMode="grab"
+        clickMode="push"
+        :particlesNumber="30"
+        :linesWidth="2">
+      </vue-particles>
     </div>
   </div>
 </template>
 
 <script>
+// import VueParticles from 'vue-particles'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { setSSID, clearSSID } from '../../storage/cookie.js'
 import { setBaseData } from '../../storage/localStorage.js'
 import { SET_IS_FROM_LOGIN } from '../../store/mutation-types'
-
+import verificationCode from '../../components/verificationCode'
 export default {
   name: 'login',
+  components: {
+    verificationCode
+    // VueParticles
+  },
   computed: {
     ...mapState(['companyName'])
   },
@@ -81,13 +85,17 @@ export default {
     return {
       form: {
         username: '',
-        password: ''
+        password: '',
+        userType: 'student',
+        verification: ''
       },
+      verification: '',
       rules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        verification: [{ validator: this.verificationRule, trigger: 'blur' }]
       }
     }
   },
@@ -119,118 +127,97 @@ export default {
           return false
         }
       })
+    },
+    verificationRule(rule, value, callback) {
+      if (value === '') {
+        callback(new Error('请输入验证码'))
+      } else if (value.toUpperCase() !== this.verification.toUpperCase()) {
+        callback(new Error('验证码错误!'))
+      } else {
+        callback()
+      }
+    },
+    onCodeChange(str) {
+      this.verification = str
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.login-wrap {
+.login {
   width: 100%;
   height: 100%;
   background: #f7fcff;
-}
-.login__title {
-  height: 20%;
-  display: flex;
-  align-items: flex-end;
-  font-size: 30px;
-  width: 1000px;
-  // padding: 35px 0 35px 24px;
-  margin: 0 auto;
-  color: #2c5590;
-}
-.login__img {
-  width: 45%;
-  margin-right: 10px;
-}
-
-.login__main {
-  width: 100%;
-  height: 402px;
-  background: linear-gradient(#1f93e2, #d5e8f9);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: auto;
-}
-
-.login__body {
-  width: 1024px;
-  height: auto;
   position: relative;
-  margin: 0 auto;
-}
-
-.login__mask {
-  background: url(./zjlll-login-mask-bg.png) no-repeat;
-  width: 411px;
-  height: 258px;
-  position: absolute;
-  right: 0;
-  bottom: -485px;
-  z-index: 1;
-}
-
-.login__form {
-  position: absolute;
-  right: 48px;
-  bottom: -485px;
-  width: 250px;
-  padding: 50px 32px 70px;
-  box-shadow: 0 1px 2px #d4d8db;
-  border-radius: 5px;
-  background: #fff;
-  z-index: 2;
-}
-
-.login-username {
-  margin-top: 18px;
-}
-
-.username-input {
-  width: 20px;
-  height: 20px;
-  background: url(./icon/input-user-icon.png) no-repeat;
-}
-
-.password-input {
-  width: 20px;
-  height: 20px;
-  background: url(./icon/input-password-icon.png) no-repeat;
-}
-.login-check {
-  margin-bottom: 22px;
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  .check-itme {
-    width: 118px;
-    height: 34px;
-    border: 1px solid #d3dce6;
-    border-radius: 5px;
-    text-align: center;
+  overflow: hidden;
+  background-color: #00beff;
+  &::after {
+    position: absolute;
+    filter: blur(4px);
+    content: '';
+    background-color: #00beff;
+    background: url('./andromeda-galaxy-bg.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transform: scale(1.1);
+    opacity: 0.9;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    motion: auto;
+    z-index: 0;
   }
-  input {
-    padding: 0;
-    margin: 0;
+  &__particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
   }
-  span {
-    overflow: hidden;
+  &__main {
+    position: absolute;
+    z-index: 2;
+    box-sizing: border-box;
+    width: 370px;
+    // height: 377px;
+    border-radius: 6px;
+    // background-color: rgba(123, 123, 123, 0.6);
+    top: 23%;
+    right: 18%;
+    padding: 10px;
+    background: linear-gradient(
+      to bottom right,
+      rgba(255, 255, 255, 0.6),
+      rgba(123, 123, 123, 0.6)
+    );
   }
-}
-
-.login-btn {
-  text-align: center;
-  button {
+  &__logo {
     width: 100%;
-    height: 36px;
-    font-size: 14px;
-    color: #fff;
-    border: 1px solid #ffb100;
-    background: #ffb100;
-    border-radius: 5px;
-    cursor: pointer;
-    outline: none;
+  }
+  &__body {
+    padding: 5px 10px;
+  }
+  &__radio-group {
+    display: flex;
+    justify-content: space-around;
+    .radio-group__label {
+      color: #ff0;
+    }
+  }
+
+  &-verification {
+    display: flex;
+    align-items: flex-end;
+    &__input {
+      margin-right: 20px;
+    }
+  }
+  &-btn {
+    width: 100%;
   }
 }
 </style>

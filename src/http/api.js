@@ -52,10 +52,6 @@ const callApi = ({
   //   new Date().valueOf() + 'main' + randomString() + api
   // )
 
-  // const params = qs.stringify({
-  //   apiparams: JSON.stringify({ params: param, readonly, async })
-  // })
-
   const params = JSON.stringify({ params: param, readonly, async })
 
   // const params = new URLSearchParams()
