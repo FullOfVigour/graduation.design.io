@@ -24,20 +24,24 @@ export default {
       percent: ''
     }
   },
-  mounted() {
+  created() {
     this.preload()
   },
   methods: {
     preload() {
-      for (let img of imgs) {
-        let image = new Image()
-        image.src = img
-        image.onload = () => {
-          this.count++
-          // 计算图片加载的百分数，绑定到percent变量
-          let percentNum = Math.floor((this.count / imgs.length) * 100)
-          this.percent = `${percentNum}%`
-        }
+      let image = new Image()
+      console.log(imgs[this.count])
+      image.onload = () => {
+        let percentNum = Math.floor((this.count / imgs.length) * 100)
+        this.percent = `${percentNum}%`
+        this.count++
+        console.log(this.count)
+      }
+      image.src = imgs[this.count]
+      console.log('ss', this.count)
+      if (this.count === imgs.length) {
+        console.log(this.count)
+        this.$emit('input', true)
       }
     }
   },
@@ -46,7 +50,6 @@ export default {
       // console.log(val)
       if (val === imgs.length) {
         // 图片加载完成后跳转页面
-        this.$emit('input', true)
       }
     }
   }

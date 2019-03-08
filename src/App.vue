@@ -3,7 +3,7 @@
     <!-- <img src="./assets/logo.png"> -->
     <loading v-if="!isComplete"
       v-model="isComplete"></loading>
-    <router-view v-else />
+    <router-view v-show="isComplete" />
   </div>
 </template>
 
