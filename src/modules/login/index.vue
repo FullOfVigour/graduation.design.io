@@ -1,6 +1,7 @@
 <template>
-  <div class="login">
-    <div class="login">
+  <transition name="enter">
+    <div v-show="isShow"
+      class="login">
       <div class="login__main">
         <img class="login__logo"
           src="../../assets/img/logo.png">
@@ -62,11 +63,10 @@
         :linesWidth="2">
       </vue-particles>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
-// import VueParticles from 'vue-particles'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { setSSID, clearSSID } from '../../storage/cookie.js'
 import { setBaseData } from '../../storage/localStorage.js'
@@ -76,7 +76,9 @@ export default {
   name: 'login',
   components: {
     verificationCode
-    // VueParticles
+  },
+  mounted() {
+    this.isShow = true
   },
   computed: {
     ...mapState(['companyName'])
@@ -96,7 +98,8 @@ export default {
         ],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         verification: [{ validator: this.verificationRule, trigger: 'blur' }]
-      }
+      },
+      isShow: false
     }
   },
   methods: {
@@ -151,13 +154,12 @@ export default {
   background: #f7fcff;
   position: relative;
   overflow: hidden;
-  background-color: #00beff;
+  background-color: #000;
   &::after {
     position: absolute;
-    filter: blur(4px);
+    filter: blur(6.5px);
     content: '';
-    background-color: #00beff;
-    background: url('./andromeda-galaxy-bg.jpg');
+    background: url('../../../static/login/login-bg-01.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -208,7 +210,6 @@ export default {
       color: #ff0;
     }
   }
-
   &-verification {
     display: flex;
     align-items: flex-end;
@@ -219,5 +220,15 @@ export default {
   &-btn {
     width: 100%;
   }
+  transition: all 0.5s;
+}
+
+.enter-enter-active,
+.enter-leave-active {
+  transition: opacity 0.5s;
+}
+.enter-enter,
+.enter-leave-to {
+  opacity: 0;
 }
 </style>

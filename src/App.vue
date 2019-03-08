@@ -1,13 +1,24 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
-    <router-view />
+    <loading v-if="!isComplete"
+      v-model="isComplete"></loading>
+    <router-view v-else />
   </div>
 </template>
 
 <script>
+import loading from './loading'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    loading
+  },
+  data() {
+    return {
+      isComplete: false
+    }
+  }
 }
 </script>
 
