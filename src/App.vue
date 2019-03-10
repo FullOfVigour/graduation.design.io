@@ -3,7 +3,7 @@
     <loading v-if="!isComplete"
       v-model="isComplete"></loading>
     <transition name="zoom">
-      <div v-if="isComplete"
+      <div v-show="isComplete"
         id="main">
         <router-view />
       </div>
