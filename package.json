@@ -14,14 +14,17 @@
     "build": "node --max_old_space_size=400 build/build.js"
   },
   "dependencies": {
+    "@tweenjs/tween.js": "^17.3.0",
     "axios": "^0.18.0",
     "babel-plugin-component": "^1.1.1",
     "element": "^0.1.4",
     "element-ui": "^2.4.9",
     "moment": "^2.22.2",
+    "tween.js": "^16.6.0",
     "vue": "^2.5.2",
     "vue-particles": "^1.0.9",
     "vue-router": "^3.0.1",
+    "vue2-animate": "^2.1.0",
     "vuex": "^3.1.0"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <top-bar></top-bar> -->
+    <top-bar></top-bar>
     <div style="margin:20px;">
       <calendar :data="list"></calendar>
     </div>

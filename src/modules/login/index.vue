@@ -1,7 +1,8 @@
 <template>
-  <transition name="enter">
-    <div v-show="isShow"
-      class="login">
+  <div class="login">
+    <transition appear
+      appear-to-class="rotateIn"
+      appear-active-class="rotateIn">
       <div class="login__main">
         <img class="login__logo"
           src="../../assets/img/logo.png">
@@ -39,7 +40,9 @@
                 <div class="login-verification">
                   <el-input class="login-verification__input"
                     v-model="form.verification"
-                    placeholder="请输入验证码"></el-input>
+                    placeholder="请输入验证码"
+                    maxlength="4"
+                    @keyup.enter.native="reLogin"></el-input>
                   <verification-code class="login-verification__code"
                     @change="onCodeChange"></verification-code>
                 </div>
@@ -54,16 +57,16 @@
           </div>
         </div>
       </div>
-      <vue-particles class="login__particles"
-        color="#aaa"
-        linesColor="#fff"
-        hoverMode="grab"
-        clickMode="push"
-        :particlesNumber="30"
-        :linesWidth="2">
-      </vue-particles>
-    </div>
-  </transition>
+    </transition>
+    <vue-particles class="login__particles"
+      color="#aaa"
+      linesColor="#fff"
+      hoverMode="grab"
+      clickMode="push"
+      :particlesNumber="30"
+      :linesWidth="2">
+    </vue-particles>
+  </div>
 </template>
 
 <script>
@@ -78,7 +81,7 @@ export default {
     verificationCode
   },
   mounted() {
-    this.isShow = true
+    // console.log(this.$router)
   },
   computed: {
     ...mapState(['companyName'])
@@ -98,8 +101,7 @@ export default {
         ],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         verification: [{ validator: this.verificationRule, trigger: 'blur' }]
-      },
-      isShow: false
+      }
     }
   },
   methods: {
@@ -143,6 +145,15 @@ export default {
     onCodeChange(str) {
       this.verification = str
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    if (from.fullPath === '/main') {
+      next(vm => {
+        vm.$router.push({ name: from.name })
+      })
+      return
+    }
+    next()
   }
 }
 </script>
@@ -220,15 +231,15 @@ export default {
   &-btn {
     width: 100%;
   }
-  transition: all 0.5s;
 }
 
-.enter-enter-active,
-.enter-leave-active {
-  transition: opacity 0.5s;
+.custom-appear-class {
+  font-size: 40px;
+  color: red;
+  background: green;
 }
-.enter-enter,
-.enter-leave-to {
-  opacity: 0;
+
+.custom-appear-active-class {
+  background: green;
 }
 </style>

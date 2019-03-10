@@ -1,9 +1,13 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
     <loading v-if="!isComplete"
       v-model="isComplete"></loading>
-    <router-view v-show="isComplete" />
+    <transition name="zoom">
+      <div v-if="isComplete"
+        id="main">
+        <router-view />
+      </div>
+    </transition>
   </div>
 </template>
 

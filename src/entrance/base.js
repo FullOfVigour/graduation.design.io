@@ -8,6 +8,8 @@ import moment from 'moment'
 
 import callApi from '../http/api'
 
+import 'vue2-animate/dist/vue2-animate.min.css'
+
 Vue.use(ElementUI)
 Vue.use(VueParticles)
 
