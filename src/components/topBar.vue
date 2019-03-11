@@ -3,7 +3,6 @@
     <div class="top__bar-logo">
       <img class="logo__img"
         src="../assets/img/logo.gif">
-      <span class="logo__span">综合实践管理平台</span>
     </div>
     <div class="top__bar-information">
       <span class="information__time">{{time}} 您好，{{studentId}}同学</span>

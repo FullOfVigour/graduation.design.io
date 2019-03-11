@@ -1,21 +1,22 @@
 <template>
-  <div class="page-container"
-    style="text-align: center;">
-    <div id="loading-panel"
-      class="animated flash box">
-      <transition enter-active-class="bounceInDown"
-        leave-active-class="bounceOutRight"
-        @enter="enter">
-        <div v-if="isShow">
-          <h1 :key="1"><strong>Loading...</strong></h1>
-          <h2 :key="2"><strong>{{percent}}%</strong></h2>
-        </div>
-      </transition>
+  <div class="loading-container">
+    <div class="loading__tunnel">
+      <tunnel></tunnel>
     </div>
+    <transition enter-active-class="bounceInDown"
+      leave-active-class="bounceOutRight"
+      @enter="enter">
+      <div class="loading__panel"
+        v-if="isShow">
+        <span class="loading__panel-title">Loading...</span>
+        <span class="loading__panel-number">{{percent}}%</span>
+      </div>
+    </transition>
   </div>
 </template>
 <script>
 import TWEEN from '@tweenjs/tween.js'
+import tunnel from './components/tunnel'
 // 需要提前加载的图片列表
 const imgs = [
   'static/login/login-bg-01.jpg',
@@ -26,6 +27,9 @@ export default {
   props: {
     value: Boolean
   },
+  components: {
+    tunnel
+  },
   data() {
     return {
       count: 0,
@@ -33,7 +37,6 @@ export default {
       isShow: false
     }
   },
-  created() {},
   mounted() {
     this.isShow = true
   },
@@ -83,3 +86,39 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.loading {
+  &-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  &__tunnel {
+    position: absolute;
+  }
+  &__panel {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    flex-wrap: wrap;
+    &-title {
+      display: block;
+      font-size: 2em;
+      font-weight: 700;
+    }
+    &-number {
+      display: block;
+      font-size: 1.2em;
+    }
+  }
+}
+</style>

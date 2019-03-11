@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <loading v-if="!isComplete"
-      v-model="isComplete"></loading>
-    <transition name="zoom">
+    <transition name="">
+      <loading v-if="!isComplete"
+        v-model="isComplete"></loading>
+    </transition>
+    <transition name="fade">
       <div v-show="isComplete"
         id="main">
         <router-view :isShow="isComplete" />

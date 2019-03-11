@@ -1,15 +1,19 @@
 <template>
   <div>
     <top-bar></top-bar>
+    <side-bar class="side-bar">
+      <slot>123</slot>
+    </side-bar>
   </div>
 </template>
 
 <script>
 import topBar from '../../components/topBar'
+import sideBar from '../../components/sideBar.vue'
 import { mapActions } from 'vuex'
 import { getBaseData } from '../../storage/localStorage'
 export default {
-  components: { topBar },
+  components: { topBar, sideBar },
   created() {
     this.initApp(getBaseData()).then(() => {})
   },
@@ -22,5 +26,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.side-bar {
+  height: 100%;
+}
 </style>
+
