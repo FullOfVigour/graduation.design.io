@@ -1,9 +1,10 @@
 <template>
   <div class="login">
+    <div class="login__after"></div>
     <transition appear
-      appear-to-class="rotateIn"
-      appear-active-class="rotateIn">
-      <div class="login__main">
+      name="rotate">
+      <div class="login__main"
+        v-show="isShow">
         <img class="login__logo"
           src="../../assets/img/logo.png">
         <div class="login__body">
@@ -77,6 +78,9 @@ import { SET_IS_FROM_LOGIN } from '../../store/mutation-types'
 import verificationCode from '../../components/verificationCode'
 export default {
   name: 'login',
+  props: {
+    isShow: Boolean
+  },
   components: {
     verificationCode
   },
@@ -165,11 +169,14 @@ export default {
   background: #f7fcff;
   position: relative;
   overflow: hidden;
-  background-color: #000;
-  &::after {
+  background: linear-gradient(
+    rgba(19, 36, 82, 0.8) 10%,
+    rgba(115, 83, 63, 0.8) 90%
+  );
+  &__after {
     position: absolute;
     filter: blur(6.5px);
-    content: '';
+    // content: '';
     background: url('../../../static/login/login-bg-01.jpg');
     background-repeat: no-repeat;
     background-position: center;

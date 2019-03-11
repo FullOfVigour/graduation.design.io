@@ -5,7 +5,7 @@
     <transition name="zoom">
       <div v-show="isComplete"
         id="main">
-        <router-view />
+        <router-view :isShow="isComplete" />
       </div>
     </transition>
   </div>
