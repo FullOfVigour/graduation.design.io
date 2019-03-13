@@ -59,7 +59,8 @@
         </div>
       </div>
     </transition>
-    <vue-particles class="login__particles"
+    <vue-particles v-if="isShow"
+      class="login__particles"
       color="#aaa"
       linesColor="#fff"
       hoverMode="grab"
