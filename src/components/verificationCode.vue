@@ -94,15 +94,11 @@ export default {
   },
   mounted() {
     this.drawCode('canvas')
-    setInterval(() => {
-      if (this.time === 300) this.drawCode('canvas')
-      else this.time++
-    }, 1000)
   },
   methods: {
     drawWord(canvas, context, num) {
       // 设置字体
-      context.font = `${this.fontSize}px ${this.fontStyle}`
+      context.font = this.fontSize + 'px ' + this.fontStyle
       let str = ''
       let x = []
       let i = 0
