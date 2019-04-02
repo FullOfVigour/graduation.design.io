@@ -17,12 +17,11 @@
 <script>
 import TWEEN from '@tweenjs/tween.js'
 import tunnel from './components/tunnel'
+import login_bg_01 from './assets/login/login-bg-01.jpg'
+import login_bg_02 from './assets/login/login-bg-02.jpg'
+import login_bg_03 from './assets/login/login-bg-03.jpg'
 // 需要提前加载的图片列表
-const imgs = [
-  'static/login/login-bg-01.jpg',
-  'static/login/login-bg-02.jpg',
-  'static/login/login-bg-03.jpg'
-]
+const imgs = [login_bg_01, login_bg_02, login_bg_03]
 export default {
   props: {
     value: Boolean
@@ -50,11 +49,9 @@ export default {
       new TWEEN.Tween({ tweeningValue: oldNumber })
         .to({ tweeningValue: number }, 1000)
         .onUpdate(tween => {
-          // console.log(number)
           this.percent = tween.tweeningValue.toFixed(0)
         })
         .start()
-      // this.percent = num
       animate()
     },
     preload() {
@@ -67,7 +64,7 @@ export default {
         }
       }
     },
-    enter(el, done) {
+    enter() {
       setTimeout(() => {
         this.preload()
       }, 700)
@@ -80,7 +77,7 @@ export default {
         this.isShow = false
         setTimeout(() => {
           this.$emit('input', true)
-        }, 500)
+        }, 1000)
       }
     }
   }

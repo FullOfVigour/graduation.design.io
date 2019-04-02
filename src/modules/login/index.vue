@@ -178,7 +178,7 @@ export default {
     position: absolute;
     filter: blur(6.5px);
     // content: '';
-    background: url('../../../static/login/login-bg-01.jpg');
+    background: url('../../assets/login/login-bg-01.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
