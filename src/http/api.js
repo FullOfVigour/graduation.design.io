@@ -7,7 +7,7 @@ import { get } from '../utils/cookie'
 import { Base64 } from 'js-base64'
 import store from '../store/entrance/main'
 import { setAccessToken } from '../storage/cookie'
-axios.defaults.baseURL = `http://47.99.209.111:8021/api/`
+axios.defaults.baseURL = `${window.location.origin}/api/`
 // axios.defaults.baseURL = 'http://47.99.209.111:8021/api/'
 axios.defaults.headers.post['Content-Type'] =
   'application/x-www-form-urlencoded; charset=UTF-8'
