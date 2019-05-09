@@ -1,6 +1,16 @@
 <template>
   <div class="home">
     <div class="home__item">
+      <system-visits-charts name="累计访问信息统计"
+        :studentVisits="studentVisits"
+        :teacherVisits="teacherVisits"></system-visits-charts>
+    </div>
+    <div class="home__item">
+      <system-visits-charts name="24小时访问信息统计"
+        :studentVisits="studentVisits"
+        :teacherVisits="teacherVisits"></system-visits-charts>
+    </div>
+    <!-- <div class="home__item">
       <bar-charts title="系统访问信息统计"
         name=""
         :xAxisList="xAxisList"
@@ -17,21 +27,15 @@
         name=""
         :xAxisList="xAxisList"
         :seriesValueList="seriesValueList"></bar-charts>
-    </div>
-    <div class="home__item">
-      <bar-charts title="系统访问信息统计"
-        name=""
-        :xAxisList="xAxisList"
-        :seriesValueList="seriesValueList"></bar-charts>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import barCharts from './components/chart/index'
+import systemVisitsCharts from './components/chart/systemVisits'
 export default {
   components: {
-    barCharts
+    systemVisitsCharts
   },
   data() {
     return {
@@ -43,7 +47,8 @@ export default {
         '累计毕业综合实践任务',
         '累计师生联系记录'
       ],
-      seriesValueList: [851192, 775363, 75774, 371471, 4008, 114455]
+      studentVisits: 775709,
+      teacherVisits: 75821
     }
   }
 }
@@ -55,19 +60,15 @@ export default {
   padding: 10px 5px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
   box-sizing: border-box;
   border-radius: 6px;
-  filter: (2px);
-  background-image: url('https://static.weixiaotong.com.cn/static/vue/develop/survey/img/background.2ef7f9b.png');
+  // background-image: url('https://static.weixiaotong.com.cn/static/vue/develop/survey/img/background.2ef7f9b.png');
   &__item {
-    width: 49%;
-    height: 500px;
+    width: 100%;
+    height: 540px;
+    margin-bottom: 10px;
   }
-}
-.home__item:nth-child(-n + 2) {
-  margin-bottom: 20px;
 }
 </style>
 

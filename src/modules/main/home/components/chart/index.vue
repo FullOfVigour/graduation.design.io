@@ -1,8 +1,14 @@
 <template>
-  <i-echarts class="chart"
-    :resizable="true"
-    :notMerge="true"
-    :option="powerOption"></i-echarts>
+  <div>
+    <i-echarts class="chart"
+      :resizable="true"
+      :notMerge="true"
+      :option="powerOption"></i-echarts>
+    <i-echarts class="chart"
+      :resizable="true"
+      :notMerge="true"
+      :option="powerOption"></i-echarts>
+  </div>
 </template>
 
 <script>
@@ -27,35 +33,41 @@ export default {
           }
         },
         tooltip: {
-          trigger: 'item'
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            crossStyle: {
+              color: '#999'
+            }
+          }
         },
-        dataRange: {
-          show: false,
-          min: 0,
-          max: 12,
-          calculable: true,
-          // color: this.colorList.filter((item, index) => {
-          //   return index % 3 === 0
-          // }),
-          // color: ['#60C0DD'],
-          y: 'center'
-        },
+        // dataRange: {
+        //   show: false,
+        //   min: 0,
+        //   max: 12,
+        //   calculable: true,
+        //   // color: this.colorList.filter((item, index) => {
+        //   //   return index % 3 === 0
+        //   // }),
+        //   // color: ['#60C0DD'],
+        //   y: 'center'
+        // },
 
         xAxis: [
           {
             type: 'category',
             show: true,
             boundaryGap: true,
-            axisLine: {
-              lineStyle: {
-                color: '#fff',
-                type: 'dashed',
-                width: 1
-              }
-            },
+            // axisLine: {
+            //   lineStyle: {
+            //     color: '#fff',
+            //     type: 'dashed',
+            //     width: 1
+            //   }
+            // },
             axisLabel: {
-              margin: 14,
-              color: '#fff'
+              margin: 14
+              // color: '#fff'
             },
             splitLine: {
               lineStyle: {
@@ -72,11 +84,11 @@ export default {
             show: true,
             axisLine: {
               lineStyle: {
-                color: '#fff'
+                // color: '#fff'
               }
             },
             axisLabel: {
-              color: '#fff'
+              // color: '#fff'
             },
             splitLine: {
               lineStyle: {
@@ -119,33 +131,12 @@ export default {
                 //     color: '#43eec6'
                 //   }
                 // ])
-                // color: '#43eec6',
-                color: params => {
-                  console.log(params)
-                  return {
-                    type: 'linear',
-                    x: 0,
-                    y: 0,
-                    x2: 0,
-                    y2: 1,
-                    colorStops: [
-                      {
-                        offset: 0,
-                        color: '#000' // 0% 处的颜色
-                      },
-                      {
-                        offset: 0.5,
-                        color: '#D1913C' // 100% 处的颜色
-                      }
-                    ],
-                    globalCoord: false // 缺省为 false
-                  }
-                },
+                color: '#43eec6',
                 label: {
                   show: true,
                   position: 'top',
-                  formatter: '{b}\n{c}',
-                  color: '#fff'
+                  formatter: '{b}\n{c}'
+                  // color: '#fff'
                 }
               }
             },
@@ -164,8 +155,8 @@ export default {
 .chart {
   width: 100%;
   height: 100%;
-  border: 1px solid #2288b796;
-  background-color: rgba(0, 57, 90, 0.3);
+  border: 1px solid #43eec6;
+  // background-color: rgba(0, 57, 90, 0.3);
   box-sizing: border-box;
 
   border-radius: 6px;

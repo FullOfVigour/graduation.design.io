@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <transition name="">
+    <!-- <transition name="">
       <loading v-if="!isComplete"
         v-model="isComplete"></loading>
     </transition>
@@ -9,16 +9,19 @@
         id="main">
         <router-view :isShow="isComplete" />
       </div>
-    </transition>
+    </transition> -->
+    <div id="main">
+      <router-view :isShow="isComplete" />
+    </div>
   </div>
 </template>
 
 <script>
-import loading from './loading'
+// import loading from './loading'
 export default {
   name: 'App',
   components: {
-    loading
+    // loading
   },
   data() {
     return {

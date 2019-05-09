@@ -9,6 +9,7 @@
 import 'echarts/lib/chart/line'
 import 'echarts/lib/chart/bar'
 import 'echarts/lib/chart/pie'
+import 'echarts/lib/chart/pictorialBar'
 // import 'echarts/lib/chart/scatter'
 // import 'echarts/lib/chart/radar'
 
