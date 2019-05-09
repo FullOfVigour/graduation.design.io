@@ -29,8 +29,13 @@ export default {
 <style lang="scss" scoped>
 .top__bar {
   width: 100%;
-  padding: 5px 10px;
+  padding: 10px 10px;
   background-color: #fff;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border: none;
   &-logo {
     height: 64px;
     width: 100%;
@@ -49,6 +54,9 @@ export default {
   }
 
   &-information {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
   }
   .information {
     &__time {

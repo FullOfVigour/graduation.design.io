@@ -36,6 +36,11 @@ html {
   height: 100%;
 }
 
+#main {
+  min-width: 1200px;
+  position: relative;
+}
+
 body,
 html {
   margin: 0;
@@ -59,4 +64,8 @@ a {
   background: white;
   box-sizing: border-box;
 }
+
+/* .el-scrollbar__wrap {
+  overflow-x: hidden;
+} */
 </style>

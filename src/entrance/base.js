@@ -8,12 +8,20 @@ import moment from 'moment'
 
 import callApi from '../http/api'
 
+// 按需引入 Echarts 组件。
+import IEcharts from '../components/reEchart/index.vue'
+// import IEcharts from 'vue-echarts-v3/src/lite.vue'
+
+import '../components/config/echarts'
+
 // import 'vue2-animate/dist/vue2-animate.min.css'
 
 require('vue2-animate/dist/vue2-animate.min.css')
 
 Vue.use(ElementUI)
 Vue.use(VueParticles)
+
+Vue.component('i-echarts', IEcharts)
 
 Vue.prototype.$callApi = callApi
 

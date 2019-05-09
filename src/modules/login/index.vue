@@ -27,7 +27,7 @@
                   @keyup.enter.native="reLogin">
                 </el-input>
               </el-form-item>
-              <el-form-item prop="type">
+              <!-- <el-form-item prop="type">
                 <el-radio-group v-model="form.userType"
                   class="login__radio-group">
                   <el-radio label="student">学生
@@ -35,9 +35,9 @@
                   <el-radio label="teacher">教师
                   </el-radio>
                 </el-radio-group>
-              </el-form-item>
+              </el-form-item> -->
 
-              <el-form-item prop="verification">
+              <!-- <el-form-item prop="verification">
                 <div class="login-verification">
                   <el-input class="login-verification__input"
                     v-model="form.verification"
@@ -47,7 +47,7 @@
                   <verification-code class="login-verification__code"
                     @change="onCodeChange"></verification-code>
                 </div>
-              </el-form-item>
+              </el-form-item> -->
 
               <el-button type="primary"
                 @click="reLogin"
@@ -76,14 +76,14 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 import { setSSID, clearSSID } from '../../storage/cookie.js'
 import { setBaseData } from '../../storage/localStorage.js'
 import { SET_IS_FROM_LOGIN } from '../../store/mutation-types'
-import verificationCode from '../../components/verificationCode'
+// import verificationCode from '../../components/verificationCode'
 export default {
   name: 'login',
   props: {
     isShow: Boolean
   },
   components: {
-    verificationCode
+    // verificationCode
   },
   mounted() {
     // console.log(this.$router)
